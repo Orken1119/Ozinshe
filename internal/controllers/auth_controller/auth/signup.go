@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"unicode"
 
-	"github.com/Orken1119/Ozinshe/internal/controller/tokenutil"
-	"github.com/Orken1119/Ozinshe/internal/models"
+	"github.com/Orken1119/Ozinshe/internal/controllers/auth_controller/tokenutil"
+	models "github.com/Orken1119/Ozinshe/internal/models/auth_models"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -28,6 +28,7 @@ func (uc AuthController) Signup(c *gin.Context) {
 		})
 		return
 	}
+
 	user, _ := uc.UserRepository.GetUserByEmail(c, request.Email)
 	if user.ID > 0 {
 		c.JSON(http.StatusBadRequest, models.ErrorResponse{
@@ -41,7 +42,7 @@ func (uc AuthController) Signup(c *gin.Context) {
 		return
 	}
 
-	err := validatePassword(request.Password)
+	err := ValidatePassword(request.Password.Password)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, models.ErrorResponse{
 			Result: []models.ErrorDetail{
@@ -53,8 +54,22 @@ func (uc AuthController) Signup(c *gin.Context) {
 		})
 		return
 	}
+	// Подтверждение пароля
+	err = ConfirmPassword(request.Password.Password, request.Password.ConfirmPassword)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, models.ErrorResponse{
+			Result: []models.ErrorDetail{
+				{
+					Code:    "ERROR_PASSWORD_MISMATCH",
+					Message: err.Error(),
+				},
+			},
+		})
+		return
+	}
+	//
 
-	encryptedPassword, err := bcrypt.GenerateFromPassword([]byte(request.Password), bcrypt.DefaultCost)
+	encryptedPassword, err := bcrypt.GenerateFromPassword([]byte(request.Password.Password), bcrypt.DefaultCost)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, models.ErrorResponse{
 			Result: []models.ErrorDetail{
@@ -66,7 +81,7 @@ func (uc AuthController) Signup(c *gin.Context) {
 		})
 		return
 	}
-	request.Password = string(encryptedPassword)
+	request.Password.Password = string(encryptedPassword)
 
 	_, err = uc.UserRepository.CreateUser(c, request)
 	if err != nil {
@@ -113,7 +128,7 @@ func (uc AuthController) Signup(c *gin.Context) {
 
 }
 
-func validatePassword(password string) error {
+func ValidatePassword(password string) error {
 	if len(password) < 8 {
 		return fmt.Errorf("password must be at least 8 characters long")
 	}
@@ -134,6 +149,15 @@ func validatePassword(password string) error {
 	}
 	if !hasUpper || !hasLower || !hasDigit {
 		return fmt.Errorf("password must contain at least one uppercase letter, one lowercase letter and one digit")
+	}
+
+	return nil
+}
+
+// Функция подтверждения
+func ConfirmPassword(password string, confirm string) error {
+	if password != confirm {
+		return fmt.Errorf("Doesn't match the password")
 	}
 	return nil
 }

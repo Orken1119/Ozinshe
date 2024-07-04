@@ -3,7 +3,7 @@ package user
 import (
 	"net/http"
 
-	"github.com/Orken1119/Ozinshe/internal/models"
+	models "github.com/Orken1119/Ozinshe/internal/models/auth_models"
 	"github.com/gin-gonic/gin"
 )
 

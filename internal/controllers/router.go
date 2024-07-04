@@ -1,13 +1,13 @@
 package controller
 
 import (
-	"github.com/Orken1119/Ozinshe/internal/controller/middleware"
-	pkg "github.com/Orken1119/Ozinshe/pkq"
+	"github.com/Orken1119/Ozinshe/internal/controllers/auth_controller/middleware"
+	pkg "github.com/Orken1119/Ozinshe/pkg"
 	"github.com/gin-gonic/gin"
 
-	"github.com/Orken1119/Ozinshe/internal/controller/auth"
-	"github.com/Orken1119/Ozinshe/internal/controller/user"
-	"github.com/Orken1119/Ozinshe/internal/repository"
+	"github.com/Orken1119/Ozinshe/internal/controllers/auth_controller/auth"
+	"github.com/Orken1119/Ozinshe/internal/controllers/auth_controller/user"
+	repository "github.com/Orken1119/Ozinshe/internal/repositories"
 )
 
 func Setup(app pkg.Application, router *gin.Engine) {
@@ -21,6 +21,8 @@ func Setup(app pkg.Application, router *gin.Engine) {
 		UserRepository: repository.NewUserRepository(db),
 	}
 
+	router.POST("/forgot-password", loginController.ForgotPassword)
+	router.POST("/change-password", loginController.ChangePassword)
 	router.POST("/signup", loginController.Signup)
 	router.POST("/signin", loginController.Signin)
 

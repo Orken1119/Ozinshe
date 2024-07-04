@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/Orken1119/Ozinshe/internal/controller"
-	pkg "github.com/Orken1119/Ozinshe/pkq"
+	controller "github.com/Orken1119/Ozinshe/internal/controllers"
+	pkg "github.com/Orken1119/Ozinshe/pkg"
 	"github.com/gin-gonic/gin"
 )
 

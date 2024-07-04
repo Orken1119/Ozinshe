@@ -3,8 +3,8 @@ package auth
 import (
 	"net/http"
 
-	"github.com/Orken1119/Ozinshe/internal/controller/tokenutil"
-	"github.com/Orken1119/Ozinshe/internal/models"
+	"github.com/Orken1119/Ozinshe/internal/controllers/auth_controller/tokenutil"
+	models "github.com/Orken1119/Ozinshe/internal/models/auth_models"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 )
