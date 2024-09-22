@@ -19,5 +19,8 @@ func App() (Application, error) {
 }
 
 func (app *Application) CloseDBConnection() {
-	app.CloseDBConnection()
+	if app.DB != nil {
+		app.DB.Close()
+		app.DB = nil
+	}
 }

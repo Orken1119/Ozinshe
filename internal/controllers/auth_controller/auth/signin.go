@@ -9,6 +9,12 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// @Accept json
+// @Produce json
+// @Param request body models.LoginRequest true "query params"
+// @Success 200 {object} models.SuccessResponse
+// @Failure default {object} models.ErrorResponse
+// @Router /signin [post]
 func (lc *AuthController) Signin(c *gin.Context) {
 	var loginRequest models.LoginRequest
 
@@ -61,7 +67,7 @@ func (lc *AuthController) Signin(c *gin.Context) {
 		})
 		return
 	}
-	accessToken, err := tokenutil.CreateAccessToken(&user, `access-key`, 50) //
+	accessToken, err := tokenutil.CreateAccessToken(&user, `access-secret-key`, 50) //
 	if err != nil {
 		c.JSON(http.StatusBadRequest, models.ErrorResponse{
 			Result: []models.ErrorDetail{

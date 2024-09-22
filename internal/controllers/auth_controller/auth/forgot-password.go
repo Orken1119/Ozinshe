@@ -10,6 +10,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Accept json
+// @Produce json
+// @Param request body models.ForgotPasswordRequest true "query params"
+// @Success 200 {object} map[string]string
+// @Failure default {object} models.ErrorResponse
+// @Router /forgot-password [post]
 func (cp *AuthController) ForgotPassword(c *gin.Context) {
 	var request models.ForgotPasswordRequest
 
@@ -42,7 +48,7 @@ func (cp *AuthController) ForgotPassword(c *gin.Context) {
 
 	// Sender data.
 	from := "ork.en389@gmail.com"
-	password := "hvcl fdqt krgt hlji"
+	password := "gtks bubt apvo pwge"
 
 	// Receiver email address.
 	to := []string{
@@ -81,7 +87,9 @@ func (cp *AuthController) ForgotPassword(c *gin.Context) {
 		})
 		return
 	}
-	fmt.Println("Email Sent Successfully!")
+
+	c.JSON(http.StatusOK, gin.H{"message": "Code was sent"})
+
 }
 
 func generateCode() string {

@@ -1,4 +1,4 @@
-package models
+package auth_models
 
 import "github.com/golang-jwt/jwt/v4"
 

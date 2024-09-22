@@ -1,56 +1,42 @@
-package auth
+package user
 
 import (
 	"fmt"
 	"net/http"
 	"unicode"
 
-	"github.com/Orken1119/Ozinshe/internal/controllers/auth_controller/tokenutil"
 	models "github.com/Orken1119/Ozinshe/internal/models/auth_models"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 )
 
-type AuthController struct {
-	UserRepository models.UserRepository
-}
+// @Tags user
+// @Accept json
+// @Produce json
+// @Param request body models.Password true "query params"
+// @Security BearerAuth
+// @Success 200 {object} map[string]string
+// @Failure default {object} models.ErrorResponse
+// @Router /user/change-password [put]
+func (sc *UserController) ChangePassword(c *gin.Context) {
+	var request models.Password
 
-//	@Accept		json
-//	@Produce	json
-//
-// @Param request body models.UserRequest true "query params"
-//
-//	@Success	200		{object}	models.SuccessResponse
-//	@Failure	default	{object}	models.ErrorResponse
-//	@Router		/signup [post]
-func (uc AuthController) Signup(c *gin.Context) {
-	var request models.UserRequest
-	if err := c.ShouldBind(&request); err != nil {
+	userID := c.GetUint("userID")
+
+	err := c.ShouldBind(&request)
+	if err != nil {
 		c.JSON(http.StatusBadRequest, models.ErrorResponse{
 			Result: []models.ErrorDetail{
 				{
 					Code:    "ERROR_BIND_JSON",
-					Message: "Datas dont match with struct of signup",
+					Message: "Datas dont match with struct of changePassword",
 				},
 			},
 		})
 		return
 	}
 
-	user, _ := uc.UserRepository.GetUserByEmail(c, request.Email)
-	if user.ID > 0 {
-		c.JSON(http.StatusBadRequest, models.ErrorResponse{
-			Result: []models.ErrorDetail{
-				{
-					Code:    "USER_EXISTS",
-					Message: "User with this email already exists",
-				},
-			},
-		})
-		return
-	}
-
-	err := ValidatePassword(request.Password.Password)
+	err = ValidatePassword(request.Password)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, models.ErrorResponse{
 			Result: []models.ErrorDetail{
@@ -63,7 +49,7 @@ func (uc AuthController) Signup(c *gin.Context) {
 		return
 	}
 	// Подтверждение пароля
-	err = ConfirmPassword(request.Password.Password, request.Password.ConfirmPassword)
+	err = ConfirmPassword(request.Password, request.ConfirmPassword)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, models.ErrorResponse{
 			Result: []models.ErrorDetail{
@@ -77,7 +63,7 @@ func (uc AuthController) Signup(c *gin.Context) {
 	}
 	//
 
-	encryptedPassword, err := bcrypt.GenerateFromPassword([]byte(request.Password.Password), bcrypt.DefaultCost)
+	encryptedPassword, err := bcrypt.GenerateFromPassword([]byte(request.Password), bcrypt.DefaultCost)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, models.ErrorResponse{
 			Result: []models.ErrorDetail{
@@ -89,16 +75,15 @@ func (uc AuthController) Signup(c *gin.Context) {
 		})
 		return
 	}
-	request.Password.Password = string(encryptedPassword)
-	request.Password.ConfirmPassword = ""
+	request.Password = string(encryptedPassword)
 
-	_, err = uc.UserRepository.CreateUser(c, request)
+	err = sc.UserRepository.ChangePassword(c, int(userID), request.Password)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, models.ErrorResponse{
 			Result: []models.ErrorDetail{
 				{
-					Code:    "ERROR_CREATE_USERS",
-					Message: "Couldn't create user",
+					Code:    "ERROR_CHANGE_RASSWORD",
+					Message: "Couldn't change password",
 					Metadata: models.Properties{
 						Properties1: err.Error(),
 					},
@@ -107,33 +92,7 @@ func (uc AuthController) Signup(c *gin.Context) {
 		})
 		return
 	}
-
-	user, err = uc.UserRepository.GetUserByEmail(c, request.Email)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, models.ErrorResponse{
-			Result: []models.ErrorDetail{
-				{
-					Code:    "ERROR_GET_USER",
-					Message: "User with this email doesn't found",
-				},
-			},
-		})
-		return
-	}
-
-	accessToken, err := tokenutil.CreateAccessToken(&user, `access-secret-key`, 50)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, models.ErrorResponse{
-			Result: []models.ErrorDetail{
-				{
-					Code:    "TOKEN_ERROR",
-					Message: "Error to create access token",
-				},
-			},
-		})
-		return
-	}
-	c.JSON(http.StatusOK, models.SuccessResponse{Result: accessToken})
+	c.JSON(http.StatusOK, gin.H{"message": "Password was changed successfully"})
 
 }
 

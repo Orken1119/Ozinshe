@@ -11,6 +11,13 @@ type UserController struct {
 	UserRepository models.UserRepository
 }
 
+// @Tags user
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Success 200 {object} models.SuccessResponse
+// @Failure default {object} models.ErrorResponse
+// @Router /user/profile [post]
 func (sc *UserController) GetProfile(c *gin.Context) {
 	userID := c.GetUint("userID")
 

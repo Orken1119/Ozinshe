@@ -95,5 +95,5 @@ func getTokenFromRequest(c *gin.Context) string {
 	if len(splitToken) == 2 {
 		return splitToken[1]
 	}
-	return ""
+	return "AAAAAA"
 }

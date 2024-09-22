@@ -8,7 +8,13 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func (fp *AuthController) ChangePassword(c *gin.Context) {
+// @Accept json
+// @Produce json
+// @Param request body models.ChangePasswordRequest true "query params"
+// @Success 200 {object} map[string]string
+// @Failure default {object} models.ErrorResponse
+// @Router /change-forgotten-password [post]
+func (fp *AuthController) ChangeForgottenPassword(c *gin.Context) {
 	var request models.ChangePasswordRequest
 
 	err := c.ShouldBind(&request)
@@ -24,13 +30,13 @@ func (fp *AuthController) ChangePassword(c *gin.Context) {
 		return
 	}
 
-	user, _ := fp.UserRepository.GetUserByEmail(c, request.Email)
-	if user.ID > 0 {
+	_, err = fp.UserRepository.GetUserByEmail(c, request.Email)
+	if err != nil {
 		c.JSON(http.StatusBadRequest, models.ErrorResponse{
 			Result: []models.ErrorDetail{
 				{
-					Code:    "USER_EXISTS",
-					Message: "User with this email doesn't exists",
+					Code:    "ERROR_GET_USER",
+					Message: "User with this email doesn't found",
 				},
 			},
 		})
@@ -49,7 +55,7 @@ func (fp *AuthController) ChangePassword(c *gin.Context) {
 		})
 		return
 	}
-	// Подтверждение пароля
+
 	err = ConfirmPassword(request.Password.Password, request.Password.ConfirmPassword)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, models.ErrorResponse{
@@ -62,7 +68,6 @@ func (fp *AuthController) ChangePassword(c *gin.Context) {
 		})
 		return
 	}
-	//
 
 	encryptedPassword, err := bcrypt.GenerateFromPassword([]byte(request.Password.Password), bcrypt.DefaultCost)
 	if err != nil {
@@ -91,7 +96,7 @@ func (fp *AuthController) ChangePassword(c *gin.Context) {
 		return
 	}
 
-	err = fp.UserRepository.ChangePassword(c, code, request.Email, request.Password.Password)
+	err = fp.UserRepository.ChangeForgottenPassword(c, code, request.Email, request.Password.Password)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, models.ErrorResponse{
 			Result: []models.ErrorDetail{
@@ -106,4 +111,7 @@ func (fp *AuthController) ChangePassword(c *gin.Context) {
 		})
 		return
 	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Password was changed"})
+
 }

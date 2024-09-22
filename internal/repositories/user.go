@@ -1,4 +1,4 @@
-package repository
+package repositories
 
 import (
 	"context"
@@ -24,7 +24,7 @@ func (ur *UserRepository) CreateUser(c context.Context, user models.UserRequest)
 		email, password, phone_number, roleid, created_at)
 		VALUES ($1, $2, $3, $4, $5) returning id;`
 
-	err := ur.db.QueryRow(c, userQuery, user.Email, user.Password, user.PhoneNumber, 2, currentTime).Scan(&userID)
+	err := ur.db.QueryRow(c, userQuery, user.Email, user.Password.Password, user.PhoneNumber, 2, currentTime).Scan(&userID)
 	if err != nil {
 		return 0, err
 	}
@@ -59,12 +59,12 @@ func (ur *UserRepository) GetUserByID(c context.Context, userID int) (models.Use
 
 }
 
-func (ur *UserRepository) GetProfile(c context.Context, userID int) (models.User, error) {
-	user := models.User{}
+func (ur *UserRepository) GetProfile(c context.Context, userID int) (models.UserProfile, error) {
+	user := models.UserProfile{}
 
-	query := `SELECT id, email, phone_number, roleid, created_at FROM users WHERE id = $1`
+	query := `SELECT id, email, phone_number, birthday FROM users WHERE id = $1`
 	row := ur.db.QueryRow(c, query, userID)
-	err := row.Scan(&user.ID, &user.Email, &user.PhoneNumber, &user.RoleID, &user.CreatedAt)
+	err := row.Scan(&user.ID, &user.Email, &user.PhoneNumber, &user.Birthday)
 	if err != nil {
 		return user, err
 	}
@@ -73,8 +73,8 @@ func (ur *UserRepository) GetProfile(c context.Context, userID int) (models.User
 }
 func (ur *UserRepository) CreatePasswordResetCode(c context.Context, email string, code string) error {
 	currentTime := time.Now().Format("2006-01-02 15:04:05")
-	query := `INSERT INTO PasswordResetCode(ID, email, code, createdAt)
-	VALUES ($1, $2, $3, $4);`
+	query := `INSERT INTO passwordresetcode(email, code, createdAt)
+	VALUES ($1, $2, $3);`
 
 	_, err := ur.db.Exec(c, query, email, code, currentTime)
 	if err != nil {
@@ -98,12 +98,12 @@ func (ur *UserRepository) GetCodeByEmail(c context.Context, email string) (strin
 
 }
 
-func (ur *UserRepository) ChangePassword(c context.Context, code string, email string, newPassword string) error {
+func (ur *UserRepository) ChangeForgottenPassword(c context.Context, code string, email string, newPassword string) error {
 	currentTime := time.Now().Format("2006-01-02 15:04:05")
 
 	var storedCode string
 
-	codeQuery := `SELECT code FROM PasswordResetCode WHERE email = 1$`
+	codeQuery := `SELECT code FROM PasswordResetCode WHERE email = $1`
 
 	err := ur.db.QueryRow(c, codeQuery, email).Scan(&storedCode)
 
@@ -117,6 +117,40 @@ func (ur *UserRepository) ChangePassword(c context.Context, code string, email s
 
 	updateQuery := `UPDATE users SET password = $1, created_at = $2 WHERE email = $3;`
 	_, err = ur.db.Exec(c, updateQuery, newPassword, currentTime, email)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (ur *UserRepository) EditPersonalData(c context.Context, userID int, name string, email string, phoneNumber string, birthday string) error {
+	query := `UPDATE users
+	SET 
+		user_name = $1,
+		email = $2,
+		phone_number = $3,
+		birthday = $4
+	WHERE 
+	    id = $5;
+	`
+	_, err := ur.db.Exec(c, query, name, email, phoneNumber, birthday, userID)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (ur *UserRepository) ChangePassword(c context.Context, userID int, password string) error {
+	currentTime := time.Now().Format("2006-01-02 15:04:05")
+
+	query := `UPDATE users
+	SET
+	password = $1,
+	created_at = $2
+	where
+	id = $3`
+	_, err := ur.db.Exec(c, query, password, currentTime, userID)
 	if err != nil {
 		return err
 	}

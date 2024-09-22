@@ -1,0 +1,510 @@
+basePath: /
+definitions:
+  github_com_Orken1119_Ozinshe_internal_models_auth_models.ChangePasswordRequest:
+    properties:
+      code:
+        type: string
+      email:
+        type: string
+      password:
+        $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.Password'
+    type: object
+  github_com_Orken1119_Ozinshe_internal_models_auth_models.ErrorDetail:
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+      metadata:
+        $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.Properties'
+    type: object
+  github_com_Orken1119_Ozinshe_internal_models_auth_models.ErrorResponse:
+    properties:
+      errors:
+        items:
+          $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.ErrorDetail'
+        type: array
+    type: object
+  github_com_Orken1119_Ozinshe_internal_models_auth_models.ForgotPasswordRequest:
+    properties:
+      email:
+        type: string
+    type: object
+  github_com_Orken1119_Ozinshe_internal_models_auth_models.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  github_com_Orken1119_Ozinshe_internal_models_auth_models.Password:
+    properties:
+      confirmPassword:
+        type: string
+      password:
+        type: string
+    type: object
+  github_com_Orken1119_Ozinshe_internal_models_auth_models.PersonalData:
+    properties:
+      birthday:
+        type: string
+      email:
+        type: string
+      name:
+        type: string
+      phoneNumber:
+        type: string
+    type: object
+  github_com_Orken1119_Ozinshe_internal_models_auth_models.Properties:
+    properties:
+      additionalProp1:
+        type: string
+      additionalProp2:
+        type: string
+      additionalProp3:
+        type: string
+    type: object
+  github_com_Orken1119_Ozinshe_internal_models_auth_models.SuccessResponse:
+    properties:
+      metadata:
+        $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.Properties'
+      result: {}
+    type: object
+  github_com_Orken1119_Ozinshe_internal_models_auth_models.UserRequest:
+    properties:
+      email:
+        type: string
+      password:
+        $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.Password'
+      phoneNumber:
+        type: string
+    type: object
+  github_com_Orken1119_Ozinshe_internal_models_movie_models.ErrorDetail:
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+      metadata:
+        $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.Properties'
+    type: object
+  github_com_Orken1119_Ozinshe_internal_models_movie_models.ErrorResponse:
+    properties:
+      errors:
+        items:
+          $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.ErrorDetail'
+        type: array
+    type: object
+  github_com_Orken1119_Ozinshe_internal_models_movie_models.Properties:
+    properties:
+      additionalProp1:
+        type: string
+      additionalProp2:
+        type: string
+      additionalProp3:
+        type: string
+    type: object
+  github_com_Orken1119_Ozinshe_internal_models_movie_models.SearchRequest:
+    properties:
+      name:
+        type: string
+    type: object
+  github_com_Orken1119_Ozinshe_internal_models_movie_models.SuccessResponse:
+    properties:
+      metadata:
+        $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.Properties'
+      result: {}
+    type: object
+host: localhost:1136
+info:
+  contact:
+    email: support@ozinshe.com
+    name: API Support
+    url: http://your-support-url.com
+  description: This is the API server for Ozinshe application.
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+  termsOfService: http://your-terms-of-service-url.com
+  title: Ozinshe API
+  version: "1.0"
+paths:
+  /change-forgotten-password:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.ChangePasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.ErrorResponse'
+  /forgot-password:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.ForgotPasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.ErrorResponse'
+  /movie/add-in-favorits/{id}:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.SuccessResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.ErrorResponse'
+      security:
+      - BearerAuth: []
+      tags:
+      - movie
+  /movie/category/{category}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: category
+        in: path
+        name: category
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.SuccessResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.ErrorResponse'
+      security:
+      - BearerAuth: []
+      tags:
+      - movie
+  /movie/favorite-movies:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.SuccessResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.ErrorResponse'
+      security:
+      - BearerAuth: []
+      tags:
+      - movie
+  /movie/get-episodes/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.SuccessResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.ErrorResponse'
+      security:
+      - BearerAuth: []
+      tags:
+      - movie
+  /movie/movie-profile/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.SuccessResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.ErrorResponse'
+      security:
+      - BearerAuth: []
+      tags:
+      - movie
+  /movie/search:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.SearchRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.SuccessResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.ErrorResponse'
+      security:
+      - BearerAuth: []
+      tags:
+      - movie
+  /movie/top-movies:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.SuccessResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.ErrorResponse'
+      security:
+      - BearerAuth: []
+      tags:
+      - movie
+  /movie/watch-movie/{episodeID}:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.SuccessResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.ErrorResponse'
+      security:
+      - BearerAuth: []
+      tags:
+      - movie
+  /movie/watched-movies:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.SuccessResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.ErrorResponse'
+      security:
+      - BearerAuth: []
+      tags:
+      - movie
+  /signin:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.SuccessResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.ErrorResponse'
+  /signup:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.UserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.SuccessResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.ErrorResponse'
+  /user/change-password:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.Password'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.ErrorResponse'
+      security:
+      - BearerAuth: []
+      tags:
+      - user
+  /user/edit-profile:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.PersonalData'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.ErrorResponse'
+      security:
+      - BearerAuth: []
+      tags:
+      - user
+  /user/profile:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.SuccessResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.ErrorResponse'
+      security:
+      - BearerAuth: []
+      tags:
+      - user
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"
