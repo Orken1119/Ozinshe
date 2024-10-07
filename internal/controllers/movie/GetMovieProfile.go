@@ -16,7 +16,7 @@ type MovieController struct {
 // @Accept		json
 // @Produce	json
 // @Param        id   path      int  true  "id"
-// @Security	BearerAuth
+// @Security Bearer
 // @Success	200		{object}	models.SuccessResponse
 // @Failure	default	{object}	models.ErrorResponse
 // @Router		/movie/movie-profile/{id} [get]

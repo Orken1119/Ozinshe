@@ -10,7 +10,7 @@ import (
 // @Tags		movie
 // @Accept		json
 // @Produce	json
-// @Security	BearerAuth
+// @Security Bearer
 // @Success	200		{object}	models.SuccessResponse
 // @Failure	default	{object}	models.ErrorResponse
 // @Router		/movie/favorite-movies [get]

@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"fmt"
 
 	"github.com/Orken1119/Ozinshe/internal/controllers/auth_controller/auth"
 	"github.com/Orken1119/Ozinshe/internal/controllers/auth_controller/user"
@@ -36,6 +37,7 @@ func Setup(app pkg.Application, router *gin.Engine) {
 
 	router.Use(middleware.JWTAuth(`access-secret-key`))
 
+	fmt.Println("5154646")
 	movieRouter := router.Group("/movie")
 	{
 		movieRouter.POST("/watch-movie/:id", movieController.WatchMovie)
@@ -45,7 +47,7 @@ func Setup(app pkg.Application, router *gin.Engine) {
 		movieRouter.GET("/category/:category", movieController.GetMovieByCategory)
 		movieRouter.GET("/favorite-movies", movieController.GetFavoriteMovies)
 		movieRouter.GET("/get-episodes/:id", movieController.GetEpisodes)
-		movieRouter.GET("/search", movieController.FindMovie)
+		movieRouter.POST("/search", movieController.FindMovie)
 		movieRouter.POST("/add-in-favorits/:id", movieController.AddInFavorits)
 	}
 

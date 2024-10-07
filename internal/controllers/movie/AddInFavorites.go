@@ -12,7 +12,7 @@ import (
 // @Accept		json
 // @Produce	json
 // @Param        id   path      int  true  "ID"
-// @Security	BearerAuth
+// @Security Bearer
 // @Success	200		{object}	models.SuccessResponse
 // @Failure	default	{object}	models.ErrorResponse
 // @Router		/movie/add-in-favorits/{id} [post]

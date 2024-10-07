@@ -11,7 +11,7 @@ import (
 // @Accept		json
 // @Produce	json
 // @Param        category   path      string  true "category"
-// @Security	BearerAuth
+// @Security Bearer
 // @Success	200		{object}	models.SuccessResponse
 // @Failure	default	{object}	models.ErrorResponse
 // @Router		/movie/category/{category} [get]

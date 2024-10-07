@@ -12,16 +12,12 @@ import (
 // @Accept		json
 // @Produce	json
 // @Param        id   path      int  true  "ID"
-// @Security	BearerAuth
+// @Security Bearer
 // @Success	200		{object}	models.SuccessResponse
 // @Failure	default	{object}	models.ErrorResponse
 // @Router		/movie/watch-movie/{episodeID} [post]
 func (mr *MovieController) WatchMovie(c *gin.Context) {
 	userID := c.GetUint("userID")
-	if userID == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
-		return
-	}
 
 	episodeIDStr := c.Param("id")
 	episodeID, err := strconv.Atoi(episodeIDStr)

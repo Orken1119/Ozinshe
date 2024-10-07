@@ -11,7 +11,7 @@ import (
 // @Accept json
 // @Produce json
 // @Param request body models.PersonalData true "query params"
-// @Security BearerAuth
+// @Security Bearer
 // @Success 200 {object} map[string]string
 // @Failure default {object} models.ErrorResponse
 // @Router /user/edit-profile [post]

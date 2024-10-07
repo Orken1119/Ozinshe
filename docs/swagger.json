@@ -1,22 +1,21 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is the API server for Ozinshe application.",
+        "description": "This is a sample server celler server.",
         "title": "Ozinshe API",
-        "termsOfService": "http://your-terms-of-service-url.com",
+        "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "name": "API Support",
-            "url": "http://your-support-url.com",
-            "email": "support@ozinshe.com"
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
         },
         "license": {
-            "name": "MIT License",
-            "url": "https://opensource.org/licenses/MIT"
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         },
         "version": "1.0"
     },
     "host": "localhost:1136",
-    "basePath": "/",
     "paths": {
         "/change-forgotten-password": {
             "post": {
@@ -98,7 +97,7 @@
             "post": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "Bearer": []
                     }
                 ],
                 "consumes": [
@@ -139,7 +138,7 @@
             "get": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "Bearer": []
                     }
                 ],
                 "consumes": [
@@ -180,7 +179,7 @@
             "get": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "Bearer": []
                     }
                 ],
                 "consumes": [
@@ -212,7 +211,7 @@
             "get": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "Bearer": []
                     }
                 ],
                 "consumes": [
@@ -253,7 +252,7 @@
             "get": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "Bearer": []
                     }
                 ],
                 "consumes": [
@@ -291,10 +290,10 @@
             }
         },
         "/movie/search": {
-            "get": {
+            "post": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "Bearer": []
                     }
                 ],
                 "consumes": [
@@ -337,7 +336,7 @@
             "get": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "Bearer": []
                     }
                 ],
                 "consumes": [
@@ -369,7 +368,7 @@
             "post": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "Bearer": []
                     }
                 ],
                 "consumes": [
@@ -410,7 +409,7 @@
             "get": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "Bearer": []
                     }
                 ],
                 "consumes": [
@@ -512,7 +511,7 @@
             "put": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "Bearer": []
                     }
                 ],
                 "consumes": [
@@ -558,7 +557,7 @@
             "post": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "Bearer": []
                     }
                 ],
                 "consumes": [
@@ -604,7 +603,7 @@
             "post": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "Bearer": []
                     }
                 ],
                 "consumes": [
@@ -815,8 +814,14 @@
         }
     },
     "securityDefinitions": {
-        "BasicAuth": {
-            "type": "basic"
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
+    },
+    "externalDocs": {
+        "description": "OpenAPI",
+        "url": "https://swagger.io/resources/open-api/"
     }
 }

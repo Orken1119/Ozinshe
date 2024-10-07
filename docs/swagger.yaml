@@ -1,4 +1,3 @@
-basePath: /
 definitions:
   github_com_Orken1119_Ozinshe_internal_models_auth_models.ChangePasswordRequest:
     properties:
@@ -115,17 +114,20 @@ definitions:
         $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.Properties'
       result: {}
     type: object
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
 host: localhost:1136
 info:
   contact:
-    email: support@ozinshe.com
+    email: support@swagger.io
     name: API Support
-    url: http://your-support-url.com
-  description: This is the API server for Ozinshe application.
+    url: http://www.swagger.io/support
+  description: This is a sample server celler server.
   license:
-    name: MIT License
-    url: https://opensource.org/licenses/MIT
-  termsOfService: http://your-terms-of-service-url.com
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
   title: Ozinshe API
   version: "1.0"
 paths:
@@ -199,7 +201,7 @@ paths:
           schema:
             $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.ErrorResponse'
       security:
-      - BearerAuth: []
+      - Bearer: []
       tags:
       - movie
   /movie/category/{category}:
@@ -224,7 +226,7 @@ paths:
           schema:
             $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.ErrorResponse'
       security:
-      - BearerAuth: []
+      - Bearer: []
       tags:
       - movie
   /movie/favorite-movies:
@@ -243,7 +245,7 @@ paths:
           schema:
             $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.ErrorResponse'
       security:
-      - BearerAuth: []
+      - Bearer: []
       tags:
       - movie
   /movie/get-episodes/{id}:
@@ -268,7 +270,7 @@ paths:
           schema:
             $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.ErrorResponse'
       security:
-      - BearerAuth: []
+      - Bearer: []
       tags:
       - movie
   /movie/movie-profile/{id}:
@@ -293,11 +295,11 @@ paths:
           schema:
             $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.ErrorResponse'
       security:
-      - BearerAuth: []
+      - Bearer: []
       tags:
       - movie
   /movie/search:
-    get:
+    post:
       consumes:
       - application/json
       parameters:
@@ -319,7 +321,7 @@ paths:
           schema:
             $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.ErrorResponse'
       security:
-      - BearerAuth: []
+      - Bearer: []
       tags:
       - movie
   /movie/top-movies:
@@ -338,7 +340,7 @@ paths:
           schema:
             $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.ErrorResponse'
       security:
-      - BearerAuth: []
+      - Bearer: []
       tags:
       - movie
   /movie/watch-movie/{episodeID}:
@@ -363,7 +365,7 @@ paths:
           schema:
             $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.ErrorResponse'
       security:
-      - BearerAuth: []
+      - Bearer: []
       tags:
       - movie
   /movie/watched-movies:
@@ -382,7 +384,7 @@ paths:
           schema:
             $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_movie_models.ErrorResponse'
       security:
-      - BearerAuth: []
+      - Bearer: []
       tags:
       - movie
   /signin:
@@ -454,7 +456,7 @@ paths:
           schema:
             $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.ErrorResponse'
       security:
-      - BearerAuth: []
+      - Bearer: []
       tags:
       - user
   /user/edit-profile:
@@ -482,7 +484,7 @@ paths:
           schema:
             $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.ErrorResponse'
       security:
-      - BearerAuth: []
+      - Bearer: []
       tags:
       - user
   /user/profile:
@@ -501,10 +503,12 @@ paths:
           schema:
             $ref: '#/definitions/github_com_Orken1119_Ozinshe_internal_models_auth_models.ErrorResponse'
       security:
-      - BearerAuth: []
+      - Bearer: []
       tags:
       - user
 securityDefinitions:
-  BasicAuth:
-    type: basic
+  Bearer:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

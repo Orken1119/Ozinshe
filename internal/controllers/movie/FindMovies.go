@@ -11,10 +11,10 @@ import (
 // @Accept		json
 // @Produce	json
 // @Param request body models.SearchRequest true "query params"
-// @Security	BearerAuth
+// @Security Bearer
 // @Success	200		{object}	models.SuccessResponse
 // @Failure	default	{object}	models.ErrorResponse
-// @Router		/movie/search [get]
+// @Router		/movie/search [post]
 func (mr *MovieController) FindMovie(c *gin.Context) {
 	var searchRequest models.SearchRequest
 

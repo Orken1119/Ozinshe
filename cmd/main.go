@@ -9,22 +9,26 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @title Ozinshe API
-// @version 1.0
-// @description This is the API server for Ozinshe application.
-// @termsOfService http://your-terms-of-service-url.com
+// @title           Ozinshe API
+// @version         1.0
+// @description     This is a sample server celler server.
+// @termsOfService  http://swagger.io/terms/
 
-// @contact.name API Support
-// @contact.url http://your-support-url.com
-// @contact.email support@ozinshe.com
+// @contact.name   API Support
+// @contact.url    http://www.swagger.io/support
+// @contact.email  support@swagger.io
 
-// @license.name MIT License
-// @license.url https://opensource.org/licenses/MIT
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
 
-// @host localhost:1136
-// @BasePath /
+// @host      localhost:1136
 
-// @securityDefinitions.basic BasicAuth
+// @securityDefinitions.apikey Bearer
+// @in header
+// @name Authorization
+
+// @externalDocs.description  OpenAPI
+// @externalDocs.url          https://swagger.io/resources/open-api/
 func main() {
 	app, err := pkg.App()
 

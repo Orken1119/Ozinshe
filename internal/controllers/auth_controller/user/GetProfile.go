@@ -14,7 +14,7 @@ type UserController struct {
 // @Tags user
 // @Accept json
 // @Produce json
-// @Security BearerAuth
+// @Security Bearer
 // @Success 200 {object} models.SuccessResponse
 // @Failure default {object} models.ErrorResponse
 // @Router /user/profile [post]

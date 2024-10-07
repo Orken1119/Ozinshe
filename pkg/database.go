@@ -11,7 +11,7 @@ import (
 
 func NewConn() (*pgxpool.Pool, error) {
 
-	connStr := "postgres://postgres:Satkneo24389@localhost:5433/postgres?sslmode=disable"
+	connStr := "postgres://postgres:Akatsuki2005@localhost:5433/postgres?sslmode=disable"
 
 	cfg, err := pgxpool.ParseConfig(connStr)
 

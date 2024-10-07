@@ -49,6 +49,7 @@ func CreateRefreshToken(user *models.User, secret string, expiry int) (refreshTo
 
 func ValidateJWT(c *gin.Context, secret string) error {
 	token, err := getToken(c, secret)
+	fmt.Println(token, err)
 	if err != nil {
 		return err
 	}
@@ -80,6 +81,7 @@ func ValidateUserJWT(c *gin.Context, secret string) error {
 
 func getToken(c *gin.Context, secret string) (*jwt.Token, error) {
 	tokenString := getTokenFromRequest(c)
+	fmt.Println(tokenString)
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
@@ -91,6 +93,7 @@ func getToken(c *gin.Context, secret string) (*jwt.Token, error) {
 
 func getTokenFromRequest(c *gin.Context) string {
 	bearerToken := c.Request.Header.Get("Authorization")
+	fmt.Println(bearerToken)
 	splitToken := strings.Split(bearerToken, " ")
 	if len(splitToken) == 2 {
 		return splitToken[1]

@@ -15,18 +15,17 @@ type AuthController struct {
 	UserRepository models.UserRepository
 }
 
-//	@Accept		json
-//	@Produce	json
-//
-// @Param request body models.UserRequest true "query params"
-//
-//	@Success	200		{object}	models.SuccessResponse
-//	@Failure	default	{object}	models.ErrorResponse
-//	@Router		/signup [post]
+//	    @Accept		json
+//	    @Produce	json
+//	    @Param request body models.UserRequest true "query params"
+//	    @Success	200		{object}	models.SuccessResponse
+//		@Failure	default	{object}	models.ErrorResponse
+//	    @Router		/signup [post]
 func (uc AuthController) Signup(c *gin.Context) {
 	var request models.UserRequest
 	if err := c.ShouldBind(&request); err != nil {
 		c.JSON(http.StatusBadRequest, models.ErrorResponse{
+
 			Result: []models.ErrorDetail{
 				{
 					Code:    "ERROR_BIND_JSON",

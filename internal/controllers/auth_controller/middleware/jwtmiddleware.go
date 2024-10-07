@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// JWT Middleware
 func JWTAuth(secret string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		err := tokenutil.ValidateJWT(c, secret)
