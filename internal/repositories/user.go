@@ -62,9 +62,9 @@ func (ur *UserRepository) GetUserByID(c context.Context, userID int) (models.Use
 func (ur *UserRepository) GetProfile(c context.Context, userID int) (models.UserProfile, error) {
 	user := models.UserProfile{}
 
-	query := `SELECT id, email, phone_number, birthday FROM users WHERE id = $1`
+	query := `SELECT id,user_name, email, phone_number, birthday FROM users WHERE id = $1`
 	row := ur.db.QueryRow(c, query, userID)
-	err := row.Scan(&user.ID, &user.Email, &user.PhoneNumber, &user.Birthday)
+	err := row.Scan(&user.ID, &user.Name, &user.Email, &user.PhoneNumber, &user.Birthday)
 	if err != nil {
 		return user, err
 	}

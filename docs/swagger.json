@@ -364,7 +364,7 @@
                 }
             }
         },
-        "/movie/watch-movie/{episodeID}": {
+        "/movie/watch-movie/{id}": {
             "post": {
                 "security": [
                     {
@@ -383,7 +383,7 @@
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "ID",
+                        "description": "id",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -600,7 +600,7 @@
             }
         },
         "/user/profile": {
-            "post": {
+            "get": {
                 "security": [
                     {
                         "Bearer": []

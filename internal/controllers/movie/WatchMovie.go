@@ -11,11 +11,11 @@ import (
 // @Tags		movie
 // @Accept		json
 // @Produce	json
-// @Param        id   path      int  true  "ID"
+// @Param        id   path      int  true  "id"
 // @Security Bearer
 // @Success	200		{object}	models.SuccessResponse
 // @Failure	default	{object}	models.ErrorResponse
-// @Router		/movie/watch-movie/{episodeID} [post]
+// @Router		/movie/watch-movie/{id} [post]
 func (mr *MovieController) WatchMovie(c *gin.Context) {
 	userID := c.GetUint("userID")
 

@@ -343,12 +343,12 @@ paths:
       - Bearer: []
       tags:
       - movie
-  /movie/watch-movie/{episodeID}:
+  /movie/watch-movie/{id}:
     post:
       consumes:
       - application/json
       parameters:
-      - description: ID
+      - description: id
         in: path
         name: id
         required: true
@@ -488,7 +488,7 @@ paths:
       tags:
       - user
   /user/profile:
-    post:
+    get:
       consumes:
       - application/json
       produces:

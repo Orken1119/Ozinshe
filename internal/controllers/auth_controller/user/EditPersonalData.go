@@ -17,7 +17,7 @@ import (
 // @Router /user/edit-profile [post]
 func (sc *UserController) EditPersonalData(c *gin.Context) {
 	userID := c.GetUint("userID")
-	var request models.PersonalData
+	var request models.UserProfile
 
 	err := c.ShouldBind(&request)
 	if err != nil {

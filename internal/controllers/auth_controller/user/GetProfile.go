@@ -17,7 +17,7 @@ type UserController struct {
 // @Security Bearer
 // @Success 200 {object} models.SuccessResponse
 // @Failure default {object} models.ErrorResponse
-// @Router /user/profile [post]
+// @Router /user/profile [get]
 func (sc *UserController) GetProfile(c *gin.Context) {
 	userID := c.GetUint("userID")
 

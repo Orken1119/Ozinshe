@@ -371,7 +371,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/movie/watch-movie/{episodeID}": {
+        "/movie/watch-movie/{id}": {
             "post": {
                 "security": [
                     {
@@ -390,7 +390,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "ID",
+                        "description": "id",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -607,7 +607,7 @@ const docTemplate = `{
             }
         },
         "/user/profile": {
-            "post": {
+            "get": {
                 "security": [
                     {
                         "Bearer": []

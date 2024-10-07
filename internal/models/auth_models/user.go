@@ -13,6 +13,7 @@ type User struct {
 
 type UserProfile struct {
 	ID          uint   `json:"id"`
+	Name        string `json:"name"`
 	Email       string `json:"email"`
 	PhoneNumber string `json:"phoneNumber"`
 	Birthday    string `json:"birthday"`
@@ -42,13 +43,6 @@ type ChangePasswordRequest struct {
 	Email    string   `json:"email"`
 	Code     string   `json:"code"`
 	Password Password `json:"password"`
-}
-
-type PersonalData struct {
-	Name        string `json:"name"`
-	Email       string `json:"email"`
-	PhoneNumber string `json:"phoneNumber"`
-	Birthday    string `json:"birthday"`
 }
 
 type UserRepository interface {
